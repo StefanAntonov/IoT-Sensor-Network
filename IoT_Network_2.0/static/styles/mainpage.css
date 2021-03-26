@@ -1,0 +1,56 @@
+p {
+    margin: auto;
+    text-align:center;
+    font-size:40px;
+    border: 4px solid #45b5d8;/*#009900|#994d00*/
+    border-radius: 12px;
+    background-color: #e0f8ff;/*#79d279|#cc9966*/
+    width: 50vw;
+}
+.station{
+    border: 4px solid #45b5d8;/*#009900|#994d00*/
+    padding: auto auto;
+    text-align: center;
+    text-decoration: none;
+    margin: 50px auto;
+    border-radius: 12px;
+    box-shadow: 0 13px #094b60;/*#006600|#4d2600*/
+    background-color: #e0f8ff;/*#79d279|#cc9966*/
+    width: 20vw;
+    max-width: 1800px;
+}
+.station_name{
+    font-size: 30px;
+    border: 100px;	
+}
+.station_readings{
+    font-size: 20px;
+    border: 25px;
+}
+.NoSensors{
+    border: 4px solid #45b5d8;/*#009900|#994d00*/
+    padding: auto auto;
+    text-align: center;
+    text-decoration: none;
+    margin: 50px auto;
+    border-radius: 12px;
+    box-shadow: 0 5px #094b60;/*#006600|#4d2600*/
+    background-color: #e0f8ff;/*#79d279|#cc9966*/
+    width: 20vw;
+    max-width: 1800px;
+    font-size: 20px;
+}
+body{
+    background-image: url("/static/images/background_light.png");
+    background-position:center;
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+    background-size: cover;
+    /*background-color:#ffe680;/*#c6ecc6*/
+}
+
+.dark_mode{
+    background-image: url("/static/images/background_dark.png");
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 100px;
+}

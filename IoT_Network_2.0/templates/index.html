@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+		<title>All Sensor Data</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link rel="stylesheet" type="text/css" href=	"{{ url_for('static',filename='styles/mainpage.css') }}">
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+	var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+	var IntervalID = setInterval(update_values, 2500);
+	var num_of_sensors = {{num_of_sensors}};
+
+	//Gets the SNs of the connected sensors
+	for (var i = 0; i < num_of_sensors; i++){
+		$.post( $SCRIPT_ROOT + "/SNumber",
+				{ "SN": i })
+				.done(function( data ) {
+					$("#SN" + data.SN).text(data.result);
+				});
+	}
+	
+	function update_values() {
+		for (var i = 0; i < num_of_sensors; i++){
+			//Updates station readings: 
+			$.post( $SCRIPT_ROOT + "/temperature",
+				{ "SN": i})
+				.done(function( data ) {
+					$("#Temperature" + data.SN).text(data.result);
+				});
+			
+			$.post( $SCRIPT_ROOT + "/humidity",
+				{ "SN": i })
+				.done(function( data ) {
+					$("#Humidity" + data.SN).text(data.result);
+				});
+			
+			$.post( $SCRIPT_ROOT + "/ambient_light",
+				{ "SN": i })
+				.done(function( data ) {
+					$("#Ambient_light" + data.SN).text(data.result);
+				});
+		}
+		//Checks if the number of transmitting stations has changed, and reloads the page:
+		$.getJSON($SCRIPT_ROOT + "/check_for_changes",
+			function(data) {
+				if (data.result){
+					location.reload();
+				}
+			});
+	};
+</script>
+<body onload="update_values();">
+	<p><strong>IoT Sensor Network</strong></p>
+	{%for i in range(num_of_sensors)%}
+		<div class="station">
+			<span class="station_name "><strong>SN-<span id="SN{{i}}">?</span>:</strong></span>
+			<div class="station_readings">
+				<div><span id="Temperature{{i}}">?</span><span> °C</span></div>
+				<div><span id="Humidity{{i}}">?</span><span>% RH</span></div>
+				<div><span id="Ambient_light{{i}}">?</span><span> lux</span></div>
+			</div>
+			
+		</div>
+	{%endfor%}
+	{%if (num_of_sensors == 0)%}
+		<p class="NoSensors">No sensors transmitting in range of Control Station</p>
+	{%endif%}
+</body>
+</html>
